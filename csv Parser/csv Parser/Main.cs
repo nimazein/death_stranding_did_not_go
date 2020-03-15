@@ -20,7 +20,7 @@ namespace csv_Parser
         }
         private void EstablishConnection()
         {
-            con = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=*******");
+            con = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=********");
             con.Open();
         }
 
@@ -481,7 +481,7 @@ namespace csv_Parser
 
         private void btnQuery_Click(object sender, EventArgs e)
         {
-            
+            EstablishConnection();
             // Проверить, пуста ли база
             cmd = new SqlCommand("select count(*)" +
                 "from publications");
@@ -494,9 +494,7 @@ namespace csv_Parser
             {
                 Queries queries = new Queries();
                 queries.ShowDialog();
-            }
-
-            
+            }            
         }
 
         private void Main_Load(object sender, EventArgs e)
