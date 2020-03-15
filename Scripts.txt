@@ -1,0 +1,78 @@
+
+create table publications(
+  id int primary key,
+  title nvarchar(400),
+  year smallint
+);
+
+create table authors(
+  id int primary key,
+  initials nvarchar(400)
+);
+
+create table keywords(
+  id int primary key,
+  keyword nvarchar(400)
+);
+
+create table types(
+  id int primary key,
+  type_name nvarchar(400) 
+);
+
+create table sources(
+  id int primary key,
+  item_title nvarchar(400),
+  book_series_title nvarchar(400),
+  journal_volume int,
+  journal_issue int
+);
+
+create table publications_authors(
+  author_id int references authors(id),
+  publication_id int references publications(id),
+  primary key (author_id, publication_id)
+);
+
+create table publications_keywords(
+  publication_id int references publications(id),
+  keyword_id int references keywords(id),
+  primary key (publication_id, keyword_id)
+);
+
+
+create table publications_sources(
+  publication_id int references publications(id),
+  source_id int references sources(id),
+  primary key (publication_id, source_id)
+);
+
+create table publications_types(
+  publication_id int references publications(id),
+  type_id int references types(id),
+  primary key (publication_id, type_id)
+);
+
+
+drop table publications_authors;
+drop table publications_keywords;
+drop table publications_sources;
+drop table publications_types;
+
+truncate table sources;
+truncate table types
+truncate table authors
+truncate table publications;
+truncate table keywords;
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,85 @@
+--количество публикаций по годам издания
+select count(*) from publications 
+where 
+  year between 1980 and 2020;
+  
+  
+--количество публикаций по источникам публикаций и годам (журналы)
+select count(*) as 'num'
+from publications
+where 
+  year between 1950 and 2020
+  and id in (
+  select publication_id 
+  from publications_sources
+  where source_id = (
+    select id from sources 
+    where item_title like 'The methods of breeding and the productive value of camels')
+  intersect
+  select publication_id
+  from publications_types
+  where
+    type_id in (
+    select id
+    from types 
+    where type_name = 'Article'));
+ 
+     
+--количество публикаций по источникам публикаций и годам (конференции); 
+select count(*) as 'num'
+from publications
+where 
+  year = 2000
+  and id in (
+  select publication_id 
+  from publications_sources
+  where source_id = (
+    select id from sources 
+    where item_title like 'Enabling Factors for in Service Provider Access')
+  intersect
+  select publication_id
+  from publications_types
+  where
+    type_id in (
+    select id
+    from types 
+    where
+      type_name like '"Article"')
+    );
+    
+    
+    
+--количество публикаций по количественному составу авторского коллектива и годам
+select count(*)
+from publications
+where 
+  year = 2000
+  and id in (
+    select publication_id
+    from publications_authors
+    group by publication_id
+    having count(author_id) = 1);
+    
+    
+--количество публикаций по ключевым словам
+select count(publication_id)
+from publications_keywords
+where keyword_id in (
+  select id 
+  from keywords
+  where 
+    lower(keyword) in ('annales', 'immunology', 'journal', '', 'service', 'device'));
+    
+--список уникальных публикаций со всеми атрибутами
+  select p.title, a.initials as 'author', s.item_title as 'source', p.year, s.journal_issue
+  from publications p
+  join publications_authors p_a
+    on p.id = p_a.publication_id
+  join authors a
+    on a.id = p_a.author_id
+  join publications_sources p_s
+    on p.id = p_s.publication_id
+  join sources s
+    on p_s.source_id = s.id;
+    
+   
