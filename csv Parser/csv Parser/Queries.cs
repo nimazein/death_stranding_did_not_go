@@ -17,7 +17,7 @@ namespace csv_Parser
         private SqlDataAdapter dataAdapter;
         private void EstablishConnection()
         {
-            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=*******");
+            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=LErwjfu4c9");
             connection.Open();
         }
         public Queries()
@@ -45,7 +45,7 @@ namespace csv_Parser
             if (cbArticle.Checked && cbChapter.Checked)
             {
                 comma_str = ", ";
-                chapter_str = "'Chapter', 'ConferencePaper', 'ReferenceWorkEntry' ";
+                chapter_str = "'Chapter','ConferencePaper','ReferenceWorkEntry'";
                 article_str = "'Article'";
             }
             else if (cbArticle.Checked)
@@ -117,15 +117,25 @@ namespace csv_Parser
             }
             if (cbKeywords.Checked && tbKeywords.Text != "")
             {
-                string keywords = GetKeywords();
-                query = "select count(publication_id) as 'num'" +
+                int sum = 0;
+                string[] keywords = GetKeywords();
+                foreach(string el in keywords)
+                {
+                    query = "select count(publication_id) as 'num'" +
                         "from publications_keywords " +
                         "where keyword_id in ( " +
                         "select id " +
                         "from keywords " +
                         "where " +
-                        $"lower(keyword) in ({keywords}));";
+                        $"lower(keyword) in ('{el}'));";
 
+                    SqlCommand cmd = new SqlCommand(query);
+                    cmd.Connection = connection;
+                    sum += (int)cmd.ExecuteScalar();
+
+                }
+                query = $"select distinct {sum} from publications";
+                
                 return new SqlDataAdapter(query, connection);
             }
             if (cbUnique.Checked)
@@ -164,47 +174,16 @@ namespace csv_Parser
             MessageBox.Show("Количество авторов введено некорректно");
             return false;
         }
-        public string GetKeywords()
+        public string[] GetKeywords()
         {
             char[] delimiter = { ',' };
             string[] keywords = tbKeywords.Text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
-            StringBuilder keys = new StringBuilder("");
-            foreach(string el in keywords)
+            for (int i = 0; i < keywords.Length; i++)
             {
-                keys.Append($"'{el.ToLower()}', ");
+                keywords[i] = keywords[i].ToLower().Replace(" ","");
             }
-            // Убрать запятую и пробел в конце.
-            keys.Remove(keys.Length - 2, 2);
-
-            return keys.ToString();
+            return keywords;
         }
-        /*
-         --количество публикаций по годам издания
-select count(*) from publications 
-where 
-  year between 1980 and 2020;
-  
-  
---количество публикаций по источникам публикаций и годам (журналы)
-select count(*) as 'num'
-from publications
-where 
-  year between 1950 and 2020
-  and id in (
-  select publication_id 
-  from publications_sources
-  where source_id = (
-    select id from sources 
-    where item_title like 'The methods of breeding and the productive value of camels')
-  intersect
-  select publication_id
-  from publications_types
-  where
-    type_id in (
-    select id
-    from types 
-    where type_name = 'Article'));
-             */
         private bool CheckYear()
         {
             string min_year_str = tbMinYear.Text;
