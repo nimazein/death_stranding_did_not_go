@@ -20,7 +20,7 @@ namespace csv_Parser
         }
         private void EstablishConnection()
         {
-            con = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=********");
+            con = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=LErwjfu4c9");
             con.Open();
         }
 
@@ -302,38 +302,40 @@ namespace csv_Parser
             int idx = 0;
 
             content_type = content_type.Replace("\"", "");
-
-            cmd = new SqlCommand("select count(id) from types");
-            cmd.Connection = con;
-            int current_id = (int)cmd.ExecuteScalar();
-            current_id++;
-
-            cmd = new SqlCommand($"select count(*) from types where type_name like '{content_type}'");
-            cmd.Connection = con;
-            if ((int)cmd.ExecuteScalar() == 0)
+            if (content_type != "Book")
             {
-                // To types.
-                cmd = new SqlCommand("insert into types(id, type_name) " +
-               $"values({current_id},'{content_type}')");
+                cmd = new SqlCommand("select count(id) from types");
+                cmd.Connection = con;
+                int current_id = (int)cmd.ExecuteScalar();
+                current_id++;
+
+                cmd = new SqlCommand($"select count(*) from types where type_name like '{content_type}'");
+                cmd.Connection = con;
+                if ((int)cmd.ExecuteScalar() == 0)
+                {
+                    // To types.
+                    cmd = new SqlCommand("insert into types(id, type_name) " +
+                   $"values({current_id},'{content_type}')");
+                    cmd.Connection = con;
+                    cmd.ExecuteNonQuery();
+
+                    // For publication_type_link.
+                    idx = current_id;
+
+                }
+                else
+                {
+                    cmd = new SqlCommand($"select id from types where type_name like '{content_type}'");
+                    cmd.Connection = con;
+
+                    idx = (int)cmd.ExecuteScalar();
+                }
+                // To publication_type_link.
+                cmd = new SqlCommand("insert into publications_types(publication_id,type_id)" +
+                    $"values({publication_id}, {idx})");
                 cmd.Connection = con;
                 cmd.ExecuteNonQuery();
-
-                // For publication_type_link.
-                idx = current_id;
-
-            }
-            else
-            {
-                cmd = new SqlCommand($"select id from types where type_name like '{content_type}'");
-                cmd.Connection = con;
-
-                idx = (int)cmd.ExecuteScalar();
-            }
-            // To publication_type_link.
-            cmd = new SqlCommand("insert into publications_types(publication_id,type_id)" +
-                $"values({publication_id}, {idx})");
-            cmd.Connection = con;
-            cmd.ExecuteNonQuery();
+            }       
 
         }
         public void FillKeywords(string publication_title, int publication_id)

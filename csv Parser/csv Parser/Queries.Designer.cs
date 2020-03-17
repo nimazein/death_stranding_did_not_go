@@ -252,6 +252,7 @@
             this.tbKeywords.Name = "tbKeywords";
             this.tbKeywords.Size = new System.Drawing.Size(353, 29);
             this.tbKeywords.TabIndex = 24;
+            this.tbKeywords.TextChanged += new System.EventHandler(this.tbKeywords_TextChanged);
             // 
             // cbKeywords
             // 

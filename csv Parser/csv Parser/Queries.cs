@@ -17,7 +17,7 @@ namespace csv_Parser
         private SqlDataAdapter dataAdapter;
         private void EstablishConnection()
         {
-            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=LErwjfu4c9");
+            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=*******");
             connection.Open();
         }
         public Queries()
@@ -45,7 +45,7 @@ namespace csv_Parser
             if (cbArticle.Checked && cbChapter.Checked)
             {
                 comma_str = ", ";
-                chapter_str = "'Chapter', 'Conference Paper'";
+                chapter_str = "'Chapter', 'ConferencePaper', 'ReferenceWorkEntry' ";
                 article_str = "'Article'";
             }
             else if (cbArticle.Checked)
@@ -58,12 +58,12 @@ namespace csv_Parser
             {
                 comma_str = "";
                 article_str = "";
-                chapter_str = "Chapter, Conference Paper";
+                chapter_str = "'Chapter', 'ConferencePaper', 'ReferenceWorkEntry'";
             }
             else
             {
                 comma_str = ", ";
-                chapter_str = "'Chapter', 'Conference Paper'";
+                chapter_str = "'Chapter', 'ConferencePaper', 'ReferenceWorkEntry' ";
                 article_str = "'Article'";
             }
             
@@ -73,7 +73,7 @@ namespace csv_Parser
                 int min_year = int.Parse(tbMinYear.Text);
                 int max_year = int.Parse(tbMaxYear.Text);
 
-                query = "select title " +
+                query = "select count(id) as 'num'" +
                     "from publications " +
                     $"where year between {min_year} and {max_year}";
 
@@ -161,7 +161,7 @@ namespace csv_Parser
                     return true;
                 }
             }
-
+            MessageBox.Show("Количество авторов введено некорректно");
             return false;
         }
         public string GetKeywords()
@@ -276,6 +276,7 @@ where
                 cbChapter.Enabled = false;
                 cbChapter.Checked = false;
                 cbArticle.Enabled = false;
+                cbArticle.Checked = false;
 
             }
             else
@@ -374,12 +375,6 @@ where
                 cbKeywords.Checked = false;
                 tbKeywords.Enabled = false;
 
-                cbYear.Enabled = false;
-                cbYear.Checked = false;
-                tbMaxYear.Enabled = false;
-                tbMinYear.Enabled = false;
-
-
             }
             else
             {
@@ -387,10 +382,6 @@ where
 
                 cbKeywords.Enabled = true;
                 tbKeywords.Enabled = true;
-
-                cbYear.Enabled = true;
-                tbMaxYear.Enabled = true;
-                tbMinYear.Enabled = true;
             }
 
         }
@@ -474,6 +465,11 @@ where
                 tbAuthorsNumber.Enabled = true;
             }
         }
-        #endregion 
+        #endregion
+
+        private void tbKeywords_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

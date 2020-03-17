@@ -18,3 +18,13 @@ C:\Users\Master\Desktop\death_stranding_did_not_go-master\csv Parser\csv Parser\
 C:\Users\Master\Desktop\death_stranding_did_not_go-master\csv Parser\csv Parser\obj\Debug\csv Parser.csproj.GenerateResource.cache
 C:\Users\Master\Desktop\death_stranding_did_not_go-master\csv Parser\csv Parser\obj\Debug\csv Parser.exe
 C:\Users\Master\Desktop\death_stranding_did_not_go-master\csv Parser\csv Parser\obj\Debug\csv Parser.pdb
+C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\bin\Debug\csv Parser.exe.config
+C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\bin\Debug\csv Parser.exe
+C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\bin\Debug\csv Parser.pdb
+C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\obj\Debug\csv Parser.csprojAssemblyReference.cache
+C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\obj\Debug\csv_Parser.Main.resources
+C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\obj\Debug\csv_Parser.Properties.Resources.resources
+C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\obj\Debug\csv_Parser.Queries.resources
+C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\obj\Debug\csv Parser.csproj.GenerateResource.cache
+C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\obj\Debug\csv Parser.exe
+C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\obj\Debug\csv Parser.pdb
