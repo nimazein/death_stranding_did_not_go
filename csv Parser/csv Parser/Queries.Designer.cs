@@ -51,6 +51,7 @@
             this.tbKeywords = new System.Windows.Forms.TextBox();
             this.cbKeywords = new System.Windows.Forms.CheckBox();
             this.cbSource = new System.Windows.Forms.CheckBox();
+            this.btnToExcel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -274,11 +275,23 @@
             this.cbSource.UseVisualStyleBackColor = true;
             this.cbSource.CheckedChanged += new System.EventHandler(this.cbSource_CheckedChanged);
             // 
+            // btnToExcel
+            // 
+            this.btnToExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.btnToExcel.Location = new System.Drawing.Point(499, 282);
+            this.btnToExcel.Name = "btnToExcel";
+            this.btnToExcel.Size = new System.Drawing.Size(111, 45);
+            this.btnToExcel.TabIndex = 27;
+            this.btnToExcel.Text = "Экспорт в Excel";
+            this.btnToExcel.UseVisualStyleBackColor = true;
+            this.btnToExcel.Click += new System.EventHandler(this.btnToExcel_Click);
+            // 
             // Queries
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 543);
+            this.Controls.Add(this.btnToExcel);
             this.Controls.Add(this.cbSource);
             this.Controls.Add(this.cbKeywords);
             this.Controls.Add(this.tbKeywords);
@@ -337,5 +350,6 @@
         private System.Windows.Forms.TextBox tbKeywords;
         private System.Windows.Forms.CheckBox cbKeywords;
         private System.Windows.Forms.CheckBox cbSource;
+        private System.Windows.Forms.Button btnToExcel;
     }
 }

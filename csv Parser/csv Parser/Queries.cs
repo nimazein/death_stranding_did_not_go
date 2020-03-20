@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using Microsoft.Office.Interop.Excel;
 
 namespace csv_Parser
 {
@@ -15,9 +10,10 @@ namespace csv_Parser
     {
         private SqlConnection connection;
         private SqlDataAdapter dataAdapter;
+        private System.Data.DataTable dataTable;
         private void EstablishConnection()
         {
-            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=LErwjfu4c9");
+            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=*********");
             connection.Open();
         }
         public Queries()
@@ -29,9 +25,8 @@ namespace csv_Parser
         {
             EstablishConnection();
             dataAdapter = GenerateQuery();
-            DataTable dataTable = new DataTable();
+            dataTable = new System.Data.DataTable();
             dataAdapter.Fill(dataTable);
-
             dataGridView1.DataSource = dataTable;
         }
         private SqlDataAdapter GenerateQuery()
@@ -73,7 +68,9 @@ namespace csv_Parser
                 int min_year = int.Parse(tbMinYear.Text);
                 int max_year = int.Parse(tbMaxYear.Text);
 
-                query = "select count(id) as 'num'" +
+                query = "select " +
+                    "distinct year, " +
+                    "count(*) over (partition by year) as 'num' " +
                     "from publications " +
                     $"where year between {min_year} and {max_year}";
 
@@ -88,7 +85,7 @@ namespace csv_Parser
                 "from publications_sources " +
                 "where source_id = ( " +
                 "select id from sources " +
-                $"where item_title like '{tbSource.Text}') " +
+                $"where item_title like '%{tbSource.Text}%') " +
                 "intersect " +
                 "select publication_id " +
                 "from publications_types " +
@@ -208,7 +205,7 @@ namespace csv_Parser
 
         private void Queries_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         #region inputChecks
@@ -448,6 +445,43 @@ namespace csv_Parser
 
         private void tbKeywords_TextChanged(object sender, EventArgs e)
         {
+
+        }
+        private void btnToExcel_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count > 0)
+            {
+                Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook workbook = app.Workbooks.Add(Type.Missing);
+                Microsoft.Office.Interop.Excel.Worksheet worksheet = null;
+
+                worksheet = workbook.Sheets["Лист1"];
+                worksheet = workbook.ActiveSheet;
+                worksheet.Name = "QueryResult";
+
+                for(int i = 1; i < dataGridView1.Columns.Count+1; i++)
+                {
+                    worksheet.Cells[i, 1] = dataGridView1.Columns[i - 1].HeaderText;
+                }
+
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                {
+                    for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                    {
+                        worksheet.Cells[i + 2, j + 1] = dataGridView1.Rows[i].Cells[i].Value.ToString();
+                    }
+                }
+
+                var saveFileDialog = new SaveFileDialog();
+                saveFileDialog.FileName = "output";
+                saveFileDialog.DefaultExt = ".xlsx";
+
+                if(saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    workbook.SaveAs(saveFileDialog.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                }
+                app.Quit();
+            }
 
         }
     }

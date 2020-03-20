@@ -28,3 +28,4 @@ C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parse
 C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\obj\Debug\csv Parser.csproj.GenerateResource.cache
 C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\obj\Debug\csv Parser.exe
 C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\obj\Debug\csv Parser.pdb
+C:\Users\Master\Documents\GitHub\death_stranding_did_not_go\csv Parser\csv Parser\obj\Debug\csv Parser.csproj.ResolveComReference.cache

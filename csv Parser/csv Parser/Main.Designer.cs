@@ -33,7 +33,6 @@
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnClearDatabase = new System.Windows.Forms.Button();
             this.btnQuery = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnSetPath
@@ -68,7 +67,7 @@
             // 
             this.btnClearDatabase.BackColor = System.Drawing.Color.Red;
             this.btnClearDatabase.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnClearDatabase.Location = new System.Drawing.Point(12, 146);
+            this.btnClearDatabase.Location = new System.Drawing.Point(153, 106);
             this.btnClearDatabase.Name = "btnClearDatabase";
             this.btnClearDatabase.Size = new System.Drawing.Size(111, 42);
             this.btnClearDatabase.TabIndex = 3;
@@ -78,7 +77,7 @@
             // 
             // btnQuery
             // 
-            this.btnQuery.Location = new System.Drawing.Point(12, 117);
+            this.btnQuery.Location = new System.Drawing.Point(12, 106);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(111, 23);
             this.btnQuery.TabIndex = 4;
@@ -86,23 +85,11 @@
             this.btnQuery.UseVisualStyleBackColor = true;
             this.btnQuery.Click += new System.EventHandler(this.btnQuery_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(12, 81);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(198, 18);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Идет загрузка данных...";
-            this.label1.Visible = false;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(276, 197);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(276, 230);
             this.Controls.Add(this.btnQuery);
             this.Controls.Add(this.btnClearDatabase);
             this.Controls.Add(this.btnLoad);
@@ -124,7 +111,6 @@
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnClearDatabase;
         private System.Windows.Forms.Button btnQuery;
-        private System.Windows.Forms.Label label1;
     }
 }
 

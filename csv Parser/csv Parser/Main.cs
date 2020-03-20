@@ -40,7 +40,7 @@ namespace csv_Parser
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            label1.Visible = true;          
+                  
 
             using (StreamReader sr = new StreamReader(fileName))
             {
@@ -61,7 +61,7 @@ namespace csv_Parser
                     publication_id++;
                 }
             }
-            label1.Visible = false;
+          
             MessageBox.Show("Готово!");
             con.Close();
         }
@@ -504,5 +504,7 @@ namespace csv_Parser
             EstablishConnection();
             btnLoad.Enabled = false;
         }
+
+
     }
 }
