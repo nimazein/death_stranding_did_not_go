@@ -474,12 +474,13 @@ namespace csv_Parser
                 worksheet = workbook.ActiveSheet;
                 worksheet.Name = "QueryResult";
 
+                // Запись заголовков 
                 for (int i = 1; i < dataGridView1.Columns.Count + 1; i++)
                 {
                     worksheet.Cells[1, i] = dataGridView1.Columns[i - 1].HeaderText;
                 }
 
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
                     for (int j = 0; j < dataGridView1.Columns.Count; j++)
                     {
