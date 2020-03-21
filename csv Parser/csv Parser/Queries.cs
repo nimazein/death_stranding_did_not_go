@@ -13,7 +13,7 @@ namespace csv_Parser
         private System.Data.DataTable dataTable;
         private void EstablishConnection()
         {
-            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=LErwjfu4c9");
+            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=******");
             connection.Open();
         }
         public Queries()
@@ -222,6 +222,7 @@ namespace csv_Parser
                 cbKeywords.Enabled = false;
                 cbKeywords.Checked = false;
                 tbKeywords.Enabled = false;
+                tbKeywords.Clear();
             }
             else
             {
@@ -243,14 +244,18 @@ namespace csv_Parser
                 cbYear.Checked = false;
                 tbMinYear.Enabled = false;
                 tbMaxYear.Enabled = false;
+                tbMaxYear.Clear();
+                tbMinYear.Clear();
 
                 cbSource.Enabled = false;
                 cbSource.Checked = false;
                 tbSource.Enabled = false;
+                tbSource.Clear();
 
                 cbAuthorsNumber.Enabled = false;
                 cbAuthorsNumber.Checked = false;
                 tbAuthorsNumber.Enabled = false;
+                tbAuthorsNumber.Clear();
 
                 cbChapter.Enabled = false;
                 cbChapter.Checked = false;
@@ -292,6 +297,7 @@ namespace csv_Parser
                 cbKeywords.Enabled = false;
                 cbKeywords.Checked = false;
                 tbKeywords.Enabled = false;
+                tbKeywords.Clear();
             }
             else
             {
@@ -317,6 +323,7 @@ namespace csv_Parser
                 cbKeywords.Checked = false;
                 cbKeywords.Enabled = false;              
                 tbKeywords.Enabled = false;
+                tbKeywords.Clear();
 
                 cbChapter.Enabled = false;
                 cbChapter.Checked = false;
@@ -403,11 +410,14 @@ namespace csv_Parser
                 cbKeywords.Enabled = false;
                 cbKeywords.Checked = false;
                 tbKeywords.Enabled = false;
+                tbKeywords.Clear();
 
                 cbYear.Enabled = false;
                 cbYear.Checked = false;
                 tbMaxYear.Enabled = false;
                 tbMinYear.Enabled = false;
+                tbMaxYear.Clear();
+                tbMinYear.Clear();
 
                 cbChapter.Enabled = false;
                 cbChapter.Checked = false;
@@ -417,10 +427,12 @@ namespace csv_Parser
                 cbSource.Enabled = false;
                 cbSource.Checked = false;
                 tbSource.Enabled = false;
+                tbSource.Clear();
 
                 cbAuthorsNumber.Enabled = false;
                 cbAuthorsNumber.Checked = false;
                 tbAuthorsNumber.Enabled = false;
+                tbAuthorsNumber.Clear();
 
 
             }

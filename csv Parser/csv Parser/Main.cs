@@ -20,7 +20,7 @@ namespace csv_Parser
         }
         private void EstablishConnection()
         {
-            con = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=******");
+            con = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=LErwjfu4c9");
             con.Open();
         }
 
