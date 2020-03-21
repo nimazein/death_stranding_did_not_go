@@ -13,7 +13,7 @@ namespace csv_Parser
         private System.Data.DataTable dataTable;
         private void EstablishConnection()
         {
-            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=*********");
+            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=LErwjfu4c9");
             connection.Open();
         }
         public Queries()
@@ -25,9 +25,13 @@ namespace csv_Parser
         {
             EstablishConnection();
             dataAdapter = GenerateQuery();
-            dataTable = new System.Data.DataTable();
-            dataAdapter.Fill(dataTable);
-            dataGridView1.DataSource = dataTable;
+            if (dataAdapter != null)
+            {
+                dataTable = new System.Data.DataTable();
+                dataAdapter.Fill(dataTable);
+                dataGridView1.DataSource = dataTable;
+            }
+            
         }
         private SqlDataAdapter GenerateQuery()
         {
@@ -114,26 +118,25 @@ namespace csv_Parser
             }
             if (cbKeywords.Checked && tbKeywords.Text != "")
             {
-                int sum = 0;
+                SqlDataAdapter sqlAd;
+                dataTable = new System.Data.DataTable();
                 string[] keywords = GetKeywords();
                 foreach(string el in keywords)
                 {
-                    query = "select count(publication_id) as 'num'" +
-                        "from publications_keywords " +
-                        "where keyword_id in ( " +
-                        "select id " +
-                        "from keywords " +
-                        "where " +
-                        $"lower(keyword) in ('{el}'));";
+                    query = "select distinct k.keyword, " +
+                    "count(*) over (partition by p_k.keyword_id) as 'num' " +
+                    "from publications_keywords p_k " +
+                    "join keywords k " +
+                    "on k.id = p_k.keyword_id " +
+                    $"where lower(k.keyword) in ('{el}'); ";
 
-                    SqlCommand cmd = new SqlCommand(query);
-                    cmd.Connection = connection;
-                    sum += (int)cmd.ExecuteScalar();
-
+                    sqlAd = new SqlDataAdapter(query, connection);   
+                    sqlAd.Fill(dataTable);
                 }
-                query = $"select distinct {sum} from publications";
                 
-                return new SqlDataAdapter(query, connection);
+                dataGridView1.DataSource = dataTable;
+
+                return null;
             }
             if (cbUnique.Checked)
             {
@@ -459,16 +462,16 @@ namespace csv_Parser
                 worksheet = workbook.ActiveSheet;
                 worksheet.Name = "QueryResult";
 
-                for(int i = 1; i < dataGridView1.Columns.Count+1; i++)
+                for (int i = 1; i < dataGridView1.Columns.Count + 1; i++)
                 {
-                    worksheet.Cells[i, 1] = dataGridView1.Columns[i - 1].HeaderText;
+                    worksheet.Cells[1, i] = dataGridView1.Columns[i - 1].HeaderText;
                 }
 
-                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     for (int j = 0; j < dataGridView1.Columns.Count; j++)
                     {
-                        worksheet.Cells[i + 2, j + 1] = dataGridView1.Rows[i].Cells[i].Value.ToString();
+                        worksheet.Cells[i + 2, j + 1] = dataGridView1.Rows[i].Cells[j].Value.ToString();
                     }
                 }
 
@@ -476,7 +479,7 @@ namespace csv_Parser
                 saveFileDialog.FileName = "output";
                 saveFileDialog.DefaultExt = ".xlsx";
 
-                if(saveFileDialog.ShowDialog() == DialogResult.OK)
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     workbook.SaveAs(saveFileDialog.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
                 }

@@ -62,13 +62,13 @@ where
     
     
 --количество публикаций по ключевым словам
-select count(publication_id)
-from publications_keywords
-where keyword_id in (
-  select id 
-  from keywords
-  where 
-    lower(keyword) in ('annales', 'immunology', 'journal', '', 'service', 'device'));
+select   
+  distinct k.keyword,
+  count(*) over (partition by p_k.keyword_id) as 'num'
+from publications_keywords p_k
+join keywords k 
+on k.id = p_k.keyword_id
+where lower(k.keyword) in ('encyclopedia','genetics','de','et');
     
 --список уникальных публикаций со всеми атрибутами
   select p.title, a.initials as 'author', s.item_title as 'source', p.year, s.journal_issue
