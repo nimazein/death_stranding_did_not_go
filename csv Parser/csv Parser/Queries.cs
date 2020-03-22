@@ -13,7 +13,7 @@ namespace csv_Parser
         private System.Data.DataTable dataTable;
         private void EstablishConnection()
         {
-            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=******");
+            connection = new SqlConnection(@"Data Source=31.31.196.234;Initial Catalog=u0979199_springer_data;Persist Security Info=True;User ID=u0979199_spender;Password=*****");
             connection.Open();
         }
         public Queries()
@@ -462,43 +462,39 @@ namespace csv_Parser
         {
 
         }
+        private Microsoft.Office.Interop.Excel.Application app;
         private void btnToExcel_Click(object sender, EventArgs e)
         {
             if (dataGridView1.Rows.Count > 0)
             {
-                Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
-                Microsoft.Office.Interop.Excel.Workbook workbook = app.Workbooks.Add(Type.Missing);
-                Microsoft.Office.Interop.Excel.Worksheet worksheet = null;
-
-                worksheet = workbook.Sheets["Лист1"];
-                worksheet = workbook.ActiveSheet;
-                worksheet.Name = "QueryResult";
-
+                if (app == null)
+                {
+                    app = new Microsoft.Office.Interop.Excel.Application();
+                    app.Application.Workbooks.Add(Type.Missing);
+                }
+                    
+                
                 // Запись заголовков 
                 for (int i = 1; i < dataGridView1.Columns.Count + 1; i++)
                 {
-                    worksheet.Cells[1, i] = dataGridView1.Columns[i - 1].HeaderText;
+                    app.Cells[1, i] = dataGridView1.Columns[i - 1].HeaderText;
                 }
 
                 for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
                     for (int j = 0; j < dataGridView1.Columns.Count; j++)
                     {
-                        worksheet.Cells[i + 2, j + 1] = dataGridView1.Rows[i].Cells[j].Value.ToString();
+                        app.Cells[i + 2, j + 1] = dataGridView1.Rows[i].Cells[j].Value.ToString();
                     }
                 }
-
-                var saveFileDialog = new SaveFileDialog();
-                saveFileDialog.FileName = "output";
-                saveFileDialog.DefaultExt = ".xlsx";
-
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    workbook.SaveAs(saveFileDialog.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-                }
-                app.Quit();
+                app.Visible = true;
             }
 
+        }
+
+        private void Queries_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            app.Quit();
         }
     }
 }

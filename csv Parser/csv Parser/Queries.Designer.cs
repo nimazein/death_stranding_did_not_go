@@ -318,6 +318,7 @@
             this.Name = "Queries";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Queries";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Queries_FormClosed);
             this.Load += new System.EventHandler(this.Queries_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
